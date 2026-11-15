@@ -9,8 +9,8 @@ def load(path):
             out.append(d)
     return out
 
-disturbances = load("../data/datasets/dataset_A/disturbances.jsonl")  # point at real Dataset A path
-k8s_events = load("../data/datasets/dataset_A/k8s_events.jsonl")
+disturbances = load("k8s_events.jsonl")  
+k8s_events = load("k8s_events.jsonl")
 
 for d in disturbances:
     d_ts = datetime.fromisoformat(d["timestamp"]).timestamp()

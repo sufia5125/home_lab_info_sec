@@ -1,7 +1,7 @@
 import subprocess, json, datetime, re
 
-IFACE = "cni0"  # confirm this matches Step 2's output
-OUT_PATH = "/home/sufia/IS/ddos-lab/data/network_capture.jsonl"
+IFACE = "cni0" 
+OUT_PATH = ""
 
 def get_pod_ip_map():
     out = subprocess.run(
@@ -27,7 +27,7 @@ def main():
         for line in proc.stdout:
             refresh_counter += 1
             if refresh_counter % 200 == 0:
-                pod_map = get_pod_ip_map()  # periodically refresh pod IPs
+                pod_map = get_pod_ip_map()  
             m = re.search(r"IP (\S+)\.(\d+) > (\S+)\.(\d+)", line)
             if not m:
                 continue

@@ -1,6 +1,6 @@
 import subprocess, json, sys, datetime, time
 
-OUT_PATH = "/home/sufia/IS/ddos-lab/data/k8s_events.jsonl"  # confirm this matches your actual path
+OUT_PATH = ""  
 
 TEMPLATE = (
     '{{.lastTimestamp}}|{{.involvedObject.kind}}|{{.involvedObject.namespace}}|'

@@ -34,7 +34,7 @@ spec:
         configMap: {name: frontend-shop-script}
       - name: logs
         hostPath:
-          path: /home/sufia/IS/ddos-lab/data/app-events
+          path: 
           type: DirectoryOrCreate
 ---
 apiVersion: v1

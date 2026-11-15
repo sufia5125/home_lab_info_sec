@@ -1,7 +1,7 @@
 import glob, time, os
 
-SRC_DIR = os.path.expanduser("~/IS/ddos-lab/data/app-events")
-OUT_PATH = os.path.expanduser("~/IS/ddos-lab/data/events.jsonl")
+SRC_DIR = os.path.expanduser("")
+OUT_PATH = os.path.expanduser("")
 
 def main():
     positions = {}

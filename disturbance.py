@@ -1,6 +1,6 @@
 import subprocess, random, json, time, datetime
 
-OUT_PATH = "/home/sufia/IS/ddos-lab/data/disturbances.jsonl" 
+OUT_PATH = "" 
 
 DEPLOYMENTS = [
     ("app1", "frontend-shop"),
@@ -54,7 +54,7 @@ def load_spike():
     subprocess.run(["kubectl", "rollout", "restart", "deployment/loadgen-shop", "-n", "app1"])
     subprocess.run(["kubectl", "rollout", "status", "deployment/loadgen-shop", "-n", "app1", "--timeout=60s"])
 
-    time.sleep(180)  # spike duration
+    time.sleep(180)  
 
     subprocess.run([
         "kubectl", "patch", "deployment", "loadgen-shop", "-n", "app1",

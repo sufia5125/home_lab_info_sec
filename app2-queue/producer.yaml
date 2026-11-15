@@ -33,5 +33,5 @@ spec:
         configMap: {name: producer-script}
       - name: logs
         hostPath:
-          path: /home/sufia/IS/ddos-lab/data/app-events
+          path: 
           type: DirectoryOrCreate
