@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend-shop
+  namespace: app1
+spec:
+  replicas: 4
+  selector: {matchLabels: {app: frontend-shop}}
+  template:
+    metadata: {labels: {app: frontend-shop}}
+    spec:
+      containers:
+      - name: frontend
+        image: python:3.11-slim
+        command: ["python", "/app/frontend.py"]
+        env:
+        - name: POD_NAME
+          valueFrom: {fieldRef: {fieldPath: metadata.name}}
+        - name: POD_NAMESPACE
+          valueFrom: {fieldRef: {fieldPath: metadata.namespace}}
+        - name: WORKLOAD_NAME
+          value: "frontend-shop"
+        resources:
+          requests: {memory: "32Mi", cpu: "50m"}
+          limits:   {memory: "128Mi", cpu: "200m"}
+        volumeMounts:
+        - name: script
+          mountPath: /app
+        - name: logs
+          mountPath: /var/log/app
+        ports: [{containerPort: 8000}]
+      volumes:
+      - name: script
+        configMap: {name: frontend-shop-script}
+      - name: logs
+        hostPath:
+          path: /home/sufia/IS/ddos-lab/data/app-events
+          type: DirectoryOrCreate
+---
+apiVersion: v1
+kind: Service
+metadata: {name: frontend-shop, namespace: app1}
+spec:
+  selector: {app: frontend-shop}
+  ports: [{port: 8000, targetPort: 8000}]

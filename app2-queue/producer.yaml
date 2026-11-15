@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: producer
+  namespace: app2
+spec:
+  replicas: 1
+  selector: {matchLabels: {app: producer}}
+  template:
+    metadata: {labels: {app: producer}}
+    spec:
+      containers:
+      - name: producer
+        image: python:3.11-slim
+        command: ["python", "/app/producer.py"]
+        env:
+        - name: POD_NAME
+          valueFrom: {fieldRef: {fieldPath: metadata.name}}
+        - name: POD_NAMESPACE
+          valueFrom: {fieldRef: {fieldPath: metadata.namespace}}
+        - name: WORKLOAD_NAME
+          value: "producer"
+        resources:
+          requests: {memory: "32Mi", cpu: "50m"}
+          limits:   {memory: "128Mi", cpu: "200m"}
+        volumeMounts:
+        - name: script
+          mountPath: /app
+        - name: logs
+          mountPath: /var/log/app
+      volumes:
+      - name: script
+        configMap: {name: producer-script}
+      - name: logs
+        hostPath:
+          path: /home/sufia/IS/ddos-lab/data/app-events
+          type: DirectoryOrCreate

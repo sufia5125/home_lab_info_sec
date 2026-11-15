@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: loadgen-shop
+  namespace: app1
+spec:
+  replicas: 1
+  selector: {matchLabels: {app: loadgen-shop}}
+  template:
+    metadata: {labels: {app: loadgen-shop}}
+    spec:
+      containers:
+      - name: loadgen
+        image: python:3.11-slim
+        command: ["python", "/app/loadgen.py"]
+        resources:
+          requests: {memory: "32Mi", cpu: "50m"}
+          limits:   {memory: "128Mi", cpu: "200m"}
+        volumeMounts: [{name: script, mountPath: /app}]
+      volumes:
+      - name: script
+        configMap: {name: loadgen-shop-script}
